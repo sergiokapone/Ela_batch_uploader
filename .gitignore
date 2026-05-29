@@ -16,3 +16,15 @@ upload_log_*.txt
 # Python
 __pycache__/
 *.pyc
+
+# uv
+.venv/
+.python-version
+uv.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PDF роботи
+*.pdf

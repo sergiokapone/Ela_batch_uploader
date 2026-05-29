@@ -1,0 +1,18 @@
+[project]
+name = "ela-kpi-uploader"
+version = "0.1.0"
+description = "Автоматичне завантаження дисертацій у репозиторій ela.kpi.ua"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+    "pyyaml>=6.0",
+    "pymupdf>=1.24.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+ela-upload = "ela_upload:main"
+ela-batch  = "ela_batch:main"
+
+[tool.uv]
+dev-dependencies = []
