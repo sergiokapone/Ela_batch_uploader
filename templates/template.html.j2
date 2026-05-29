@@ -1,0 +1,45 @@
+{# template.html.j2 — Jinja2 шаблон таблиці робіт ela.KPI #}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ collection_label }} — {{ year }}</title>
+</head>
+<body>
+
+<h3 style="color: #283593; margin-top: 12px;">{{ collection_label }} {{ year }}</h3>
+<table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px;">
+  <thead>
+    <tr>
+      <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: center; border: 1px solid #ccc; width: 36px;">№</th>
+      <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">ПІБ</th>
+      <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">Назва роботи</th>
+      <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">ПІБ керівника</th>
+      <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">Посилання</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for work in works %}
+    {% set bg = "#f0f4f8" if loop.index is odd else "#ffffff" %}
+    <tr>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: center; background: {{ bg }};">{{ loop.index }}</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">{{ work.authors | join(", ") }}</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">{{ work.title or "—" }}</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">{{ work.advisors | join(", ") }}</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">
+        {% if work.url %}
+        <a href="{{ work.url }}">
+          <img src="https://ela.kpi.ua/assets/cusdspace/images/elakpi-logo.webp"
+               alt="Логотип репозиторію" width="78" height="31">
+        </a>
+        {% else %}
+        —
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>
