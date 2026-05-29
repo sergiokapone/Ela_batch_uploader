@@ -1,0 +1,18 @@
+# Креденшили
+.env
+!.env.example
+
+# Метадані робіт
+*.yaml
+*.yml
+
+# Папки зі студентськими роботами
+*_magistr/
+*_bakalavr/
+
+# Логи
+upload_log_*.txt
+
+# Python
+__pycache__/
+*.pyc
