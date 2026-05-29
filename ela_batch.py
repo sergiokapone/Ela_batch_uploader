@@ -22,25 +22,49 @@ import glob
 from datetime import datetime
 
 
+def find_pair_in_folder(folder, name):
+    """Шукає пару PDF+YAML в одній папці"""
+    yaml_candidates = (
+        glob.glob(os.path.join(folder, f"{name}_meta.yaml")) +
+        glob.glob(os.path.join(folder, f"{name}.yaml")) +
+        glob.glob(os.path.join(folder, "*.yaml"))
+    )
+    pdf_candidates = (
+        glob.glob(os.path.join(folder, f"{name}.pdf")) +
+        glob.glob(os.path.join(folder, "*.pdf"))
+    )
+    return yaml_candidates, pdf_candidates
+
+
 def find_pairs(root_dir):
-    """Знаходить всі пари PDF+YAML у підпапках"""
+    """Знаходить всі пари PDF+YAML — як у підпапках, так і в поточній теці"""
     pairs = []
+
+    # --- Варіант 1: файли лежать прямо в root_dir ---
+    root_yamls = glob.glob(os.path.join(root_dir, "*.yaml"))
+    root_pdfs  = glob.glob(os.path.join(root_dir, "*.pdf"))
+    if root_yamls and root_pdfs:
+        # Зіставляємо по імені без розширення
+        pdf_map = {os.path.splitext(os.path.basename(p))[0]: p for p in root_pdfs}
+        for yaml_path in sorted(root_yamls):
+            name = os.path.splitext(os.path.basename(yaml_path))[0]
+            name = name.replace('_meta', '')
+            pdf_path = pdf_map.get(name)
+            if not pdf_path:
+                print(f"  ⚠️  [{name}] — PDF не знайдено поруч, пропускаємо")
+                continue
+            is_bakalavr = 'bakalavr' in name.lower() or 'бакалавр' in name.lower()
+            pairs.append({'name': name, 'yaml': yaml_path, 'pdf': pdf_path, 'is_bakalavr': is_bakalavr})
+        return pairs
+
+    # --- Варіант 2: кожна робота в окремій підпапці ---
     for entry in sorted(os.scandir(root_dir), key=lambda e: e.name):
         if not entry.is_dir():
             continue
         folder = entry.path
-        name = entry.name  # напр. Lytvyn_magistr або Dibilko_bakalavr
+        name = entry.name
 
-        # Шукаємо YAML (підтримуємо *_meta.yaml і просто *.yaml)
-        yaml_candidates = (
-            glob.glob(os.path.join(folder, f"{name}_meta.yaml")) +
-            glob.glob(os.path.join(folder, f"{name}.yaml")) +
-            glob.glob(os.path.join(folder, "*.yaml"))
-        )
-        pdf_candidates = (
-            glob.glob(os.path.join(folder, f"{name}.pdf")) +
-            glob.glob(os.path.join(folder, "*.pdf"))
-        )
+        yaml_candidates, pdf_candidates = find_pair_in_folder(folder, name)
 
         if not yaml_candidates:
             print(f"  ⚠️  [{name}] — YAML не знайдено, пропускаємо")
@@ -49,16 +73,11 @@ def find_pairs(root_dir):
             print(f"  ⚠️  [{name}] — PDF не знайдено, пропускаємо")
             continue
 
-        yaml_path = yaml_candidates[0]
-        pdf_path  = pdf_candidates[0]
-
-        # Визначаємо тип по імені папки
         is_bakalavr = 'bakalavr' in name.lower() or 'бакалавр' in name.lower()
-
         pairs.append({
             'name':        name,
-            'yaml':        yaml_path,
-            'pdf':         pdf_path,
+            'yaml':        yaml_candidates[0],
+            'pdf':         pdf_candidates[0],
             'is_bakalavr': is_bakalavr,
         })
 
