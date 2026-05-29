@@ -378,7 +378,8 @@ class ElaClient:
 def main():
     if len(sys.argv) < 2:
         print("Використання:")
-        print("  python ela_upload.py thesis_meta.yaml              — завантажити магістерську")
+        print("  python ela_upload.py thesis_meta.yaml              — завантажити магістерську (чернетка)")
+        print("  python ela_upload.py thesis_meta.yaml --submit      — завантажити і одразу на модерацію")
         print("  python ela_upload.py thesis_meta.yaml --bakalavr   — завантажити бакалаврську")
         print("  python ela_upload.py --collections                 — список колекцій кафедри")
         print("  python ela_upload.py --list                        — список робіт на модерації")
@@ -473,8 +474,16 @@ def main():
     if errors:
         print("  ⛔ Є помилки валідації"); sys.exit(1)
 
-    print(f"\n🎉 Готово! Чернетку для '{meta.get('author', '')}' створено та заповнено.")
-    print(f"   Перевір та відправ вручну на: https://ela.kpi.ua/mydspace")
+    if '--submit' in sys.argv:
+        print("\n🚀 --submit: відправляємо одразу в workflow...")
+        if client.send_to_workflow(w_id):
+            print(f"🎉 Готово! Роботу '{meta.get('author', '')}' відправлено на модерацію!")
+        else:
+            print("❌ Помилка відправки в workflow. Чернетка збережена — відправ вручну.")
+            print(f"   https://ela.kpi.ua/mydspace")
+    else:
+        print(f"\n🎉 Готово! Чернетку для '{meta.get('author', '')}' створено та заповнено.")
+        print(f"   Перевір та відправ вручну на: https://ela.kpi.ua/mydspace")
 
 
 if __name__ == "__main__":

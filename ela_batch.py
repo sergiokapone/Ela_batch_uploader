@@ -1,20 +1,19 @@
-r"""
-ela_batch.py — Пакетне завантаження магістерських та бакалаврських робіт в ela.KPI.
-
-Структура папок:
-  Upload_magistr\
-    Lytvyn_magistr\
-      Lytvyn_magistr.pdf
-      Lytvyn_magistr.yaml        ← або Lytvyn_magistr_meta.yaml
-    Dibilko_bakalavr\
-      Dibilko_bakalavr.pdf
-      Dibilko_bakalavr.yaml
-
-Використання:
-  python ela_batch.py                  — обробити всі папки в поточній теці
-  python ela_batch.py E:\Work\Upload   — вказати конкретну теку
-  python ela_batch.py --dry-run        — показати що буде зроблено без реального завантаження
-"""
+#!/usr/bin/env python3
+# ela_batch.py -- Пакетне завантаження магістерських та бакалаврських робіт в ela.KPI.
+#
+# Структура папок:
+#   Upload_magistr/
+#     Lytvyn_magistr/
+#       Lytvyn_magistr.pdf
+#       Lytvyn_magistr.yaml        (або Lytvyn_magistr_meta.yaml)
+#     Dibilko_bakalavr/
+#       Dibilko_bakalavr.pdf
+#       Dibilko_bakalavr.yaml
+#
+# Використання:
+#   python ela_batch.py                  -- обробити всі папки в поточній теці
+#   python ela_batch.py C:/Work/Upload   -- вказати конкретну теку
+#   python ela_batch.py --dry-run        -- показати що буде зроблено без завантаження
 
 import os
 import sys
@@ -66,13 +65,15 @@ def find_pairs(root_dir):
     return pairs
 
 
-def run_upload(pair, dry_run=False, log_file=None):
+def run_upload(pair, dry_run=False, log_file=None, submit=False):
     """Запускає ela_upload.py для одної пари"""
     script = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ela_upload.py')
 
     cmd = [sys.executable, script, pair['yaml']]
     if pair['is_bakalavr']:
         cmd.append('--bakalavr')
+    if submit:
+        cmd.append('--submit')
 
     label = f"{'[BAKALAVR]' if pair['is_bakalavr'] else '[MAGISTR] '} {pair['name']}"
 
@@ -103,7 +104,8 @@ def run_upload(pair, dry_run=False, log_file=None):
 def main():
     args = sys.argv[1:]
     dry_run = '--dry-run' in args
-    args = [a for a in args if a != '--dry-run']
+    submit  = '--submit'   in args
+    args = [a for a in args if a not in ('--dry-run', '--submit')]
 
     root_dir = args[0] if args else os.getcwd()
 
@@ -114,6 +116,8 @@ def main():
     print(f"📂 Сканую: {root_dir}")
     if dry_run:
         print("🔍 РЕЖИМ ПЕРЕГЛЯДУ (dry-run) — реального завантаження не буде\n")
+    if submit:
+        print("🚀 РЕЖИМ --submit — роботи одразу підуть на модерацію без зупинки\n")
 
     pairs = find_pairs(root_dir)
 
@@ -129,7 +133,7 @@ def main():
     if dry_run:
         print("\n--- Деталі ---")
         for p in pairs:
-            run_upload(p, dry_run=True)
+            run_upload(p, dry_run=True, submit=submit)
         sys.exit(0)
 
     # Підтвердження
@@ -147,7 +151,7 @@ def main():
     failed_names = []
 
     for p in pairs:
-        success = run_upload(p, dry_run=False, log_file=log_path)
+        success = run_upload(p, dry_run=False, log_file=log_path, submit=submit)
         if success:
             ok += 1
         else:
