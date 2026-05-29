@@ -19,7 +19,7 @@
              href="https://ela.kpi.ua/collections/{{ collection_uuids.bakalavr }}">Бакалаврські роботи</a></li>
     </ul>
     <div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid #c5cae9;">
-      <span style="font-weight: 600;">Записи захистів кваліфікаційних робіт:&nbsp;</span> 
+      <span style="font-weight: 600;">Записи захистів кваліфікаційних робіт:&nbsp;</span>
       <a style="color: #b71c1c; font-weight: 600; text-decoration: none;" href="https://www.youtube.com/playlist?list=PLjd3PvSesgEzfZxXOtwrjLOSYK4d25he7">YouTube-канал кафедри</a>
     </div>
   </div>
@@ -35,39 +35,22 @@
 
     <h3 style="color: #283593; margin-top: 12px;">{{ collection_labels[col] }}</h3>
 
-    <div style="overflow-x:auto">
-    <table style="width: 100%; min-width: 600px; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px; margin-bottom: 24px;">      <thead>
-        <tr>
-          <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: center; border: 1px solid #ccc; width: 36px;">№</th>
-          <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">ПІБ</th>
-          <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">Назва роботи</th>
-          <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc;">ПІБ керівника</th>
-          <th style="background: #1a5276; color: #fff; padding: 10px 12px; text-align: left; border: 1px solid #ccc; width: 90px;">Посилання</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for work in works %}
-        {% set bg = "#f0f4f8" if loop.index is odd else "#ffffff" %}
-        <tr>
-          <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: center; background: {{ bg }};">{{ loop.index }}</td>
-          <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">{{ work.authors | join(", ") }}</td>
-          <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">{{ work.title or "—" }}</td>
-          <td style="padding: 8px 12px; border: 1px solid #ccc; background: {{ bg }};">{{ work.advisors | join(", ") }}</td>
-          <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: center; background: {{ bg }};">
-            {% if work.url %}
-            <a href="{{ work.url }}">
-              <img src="https://ela.kpi.ua/assets/cusdspace/images/elakpi-logo.webp"
-                   alt="ela.kpi.ua" width="78" height="31">
-            </a>
-            {% else %}
-            —
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    {% for work in works %}
+    {% set bg = "#f5f7ff" if loop.index is odd else "#ffffff" %}
+    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; background: {{ bg }}; border-bottom: 1px solid #e0e4f0;">
+      <div style="min-width: 24px; font-size: 12px; color: #9099b0; padding-top: 3px; text-align: right;">{{ loop.index }}</div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; font-weight: 600; color: #1a237e;">{{ work.authors | join(", ") }}</div>
+        <div style="font-size: 13px; color: #333; margin-top: 2px;">{{ work.title or "—" }}</div>
+        <div style="font-size: 11px; color: #888; margin-top: 3px;">{{ work.advisors | join(", ") }}</div>
+      </div>
+      <div style="flex-shrink: 0; padding-top: 2px;">
+        {% if work.url %}
+        <a href="{{ work.url }}" style="display: inline-block; width: 30px; height: 30px; background: #1a5276; border-radius: 6px; text-align: center; line-height: 30px; color: #fff; text-decoration: none; font-size: 16px;">&#128279;</a>
+        {% endif %}
+      </div>
     </div>
+    {% endfor %}
 
     {% endif %}
     {% endfor %}
