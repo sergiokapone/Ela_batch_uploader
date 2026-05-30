@@ -1,0 +1,172 @@
+#kpi-shelf-app {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 0;
+    color: #2c3e50;
+}
+
+#kpi-shelf-status {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-bottom: 16px;
+}
+
+#kpi-shelf-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── Карточка — горизонтальна ── */
+.kpi-shelf-item {
+    display: flex;
+    flex-direction: row;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    transition: box-shadow 0.2s;
+}
+
+.kpi-shelf-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+/* ── Обкладинка ── */
+.kpi-shelf-cover {
+    display: block;
+    width: 60px;
+    min-width: 90px;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f1f3f5;
+    flex-shrink: 0;
+}
+
+.kpi-shelf-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.kpi-shelf-item:hover .kpi-shelf-cover img {
+    transform: scale(1.04);
+}
+
+.kpi-shelf-nocover {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #ced4da;
+    background: #f8f9fa;
+}
+
+/* ── Інфо ── */
+.kpi-shelf-info {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.kpi-shelf-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.kpi-shelf-type {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.kpi-shelf-type--learning {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
+
+.kpi-shelf-type--methodical {
+    background: #E3F2FD;
+    color: #1565C0;
+}
+
+.kpi-shelf-type--article {
+    background: #F3E5F5;
+    color: #6A1B9A;
+}
+
+.kpi-shelf-type--thesis {
+    background: #FFF8E1;
+    color: #F57F17;
+}
+
+.kpi-shelf-type--other {
+    background: #F5F5F5;
+    color: #555;
+}
+
+.kpi-shelf-year {
+    font-size: 12px;
+    color: #999;
+}
+
+.kpi-shelf-title {
+    font-size: 20px !important;
+    font-weight: 600;
+}
+
+.kpi-shelf-title a {
+    color: #2c3e50;
+    text-decoration: none !important;
+}
+
+.kpi-shelf-title a:hover {
+    color: #1D9E75;
+}
+
+.kpi-shelf-authors {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #444;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.kpi-shelf-abstract {
+    margin: 6px 0 0 0;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── Мобілка ── */
+@media (max-width: 500px) {
+    .kpi-shelf-item {
+        flex-direction: column;
+    }
+
+    .kpi-shelf-cover {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+    }
+
+    .kpi-shelf-cover img {
+        object-position: top center;
+    }
+}
