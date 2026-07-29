@@ -170,3 +170,56 @@
         object-position: top center;
     }
 }
+
+/* ── Контролі ── */
+#kpi-shelf-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+#kpi-shelf-search {
+    flex: 2;
+    min-width: 200px;
+    padding: 10px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+    color: #2c3e50;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#kpi-shelf-search:focus {
+    outline: none;
+    border-color: #1D9E75;
+    box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.15);
+}
+
+#kpi-shelf-search::placeholder {
+    color: #adb5bd;
+}
+
+#kpi-shelf-sort {
+    padding: 10px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+    color: #2c3e50;
+    cursor: pointer;
+    flex: 1;
+    min-width: 150px;
+}
+
+#kpi-shelf-sort:focus {
+    outline: none;
+    border-color: #1D9E75;
+    box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.15);
+}

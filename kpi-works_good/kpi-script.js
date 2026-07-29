@@ -57,11 +57,6 @@ function loadWorks() {
         url.searchParams.set('query', btoa(unescape(encodeURIComponent(currentQuery))));
         url.searchParams.set('q_enc', 'base64');
     }
-    
-    if (kpiWorksConfig.advisor) {
-        url.searchParams.set('advisor', btoa(unescape(encodeURIComponent(kpiWorksConfig.advisor))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''));
-        url.searchParams.set('adv_enc', 'base64');
-    }
 
     // Робимо запит до свого WordPress (не до КПІ напряму!)
     fetch(url.toString())

@@ -137,15 +137,6 @@ function kpi_get_works(WP_REST_Request $request) {
     try {
         $collection = $request->get_param('collection') ?? 'magistr';
         $year       = $request->get_param('year') ?? '';
-        $advisor_raw = $request->get_param('advisor') ?? '';
-		$adv_enc     = $request->get_param('adv_enc') ?? '';
-		if ($adv_enc === 'base64') {
-			$b64         = str_replace(['-', '_'], ['+', '/'], $advisor_raw);
-			$padded      = $b64 . str_repeat('=', (4 - strlen($b64) % 4) % 4);
-			$advisor_raw = base64_decode($padded);
-		}
-		$advisor   = trim(wp_strip_all_tags($advisor_raw));
-		$advisor_q = mb_strtolower($advisor);
         $raw   = $request->get_param('query') ?? '';
         $enc   = $request->get_param('q_enc') ?? '';
         if ($enc === 'base64') {
@@ -181,7 +172,7 @@ function kpi_get_works(WP_REST_Request $request) {
             });
         }
 
-        $filtered = array_values(array_filter($all, function($w) use ($year, $query, $advisor_q) {
+        $filtered = array_values(array_filter($all, function($w) use ($year, $query) {
 
             // Фільтр по року
             if ($year && $w['year'] !== $year) return false;
@@ -194,11 +185,6 @@ function kpi_get_works(WP_REST_Request $request) {
                     implode(' ', $w['advisors'])
                 );
                 if (mb_strpos($haystack, $query) === false) return false;
-            }
-            
-            if ($advisor_q) {
-                $adv_hay = mb_strtolower(implode(' ', $w['advisors']));
-                if (mb_strpos($adv_hay, $advisor_q) === false) return false;
             }
 
             return true;
@@ -235,14 +221,9 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 // ── Шорткод [kpi_works] ────────────────────────────────────────────────────
-add_shortcode('kpi_works', function ($atts) {
-    $atts = shortcode_atts(['advisor' => ''], $atts);
+add_shortcode('kpi_works', function () {
     wp_enqueue_script('kpi-works-script');
     wp_enqueue_style('kpi-works-style');
-    wp_localize_script('kpi-works-script', 'kpiWorksConfig', [
-        'apiUrl'  => rest_url('kpi/v1/works'),
-        'advisor' => esc_attr($atts['advisor']),
-    ]);
 
     ob_start(); ?>
     <div id="kpi-works-app">

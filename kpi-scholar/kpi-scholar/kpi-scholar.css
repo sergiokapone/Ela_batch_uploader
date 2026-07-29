@@ -1,0 +1,209 @@
+#kpi-scholar-app {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #2c3e50;
+}
+
+#kpi-scholar-status {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 12px;
+    padding: 0 2px;
+}
+
+/* ── Контролі ── */
+#kpi-scholar-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    background: #f8f9fa;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.kpi-scholar-search-wrap {
+    position: relative;
+    flex: 2;
+    min-width: 200px;
+}
+
+.kpi-scholar-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0.45;
+}
+
+#kpi-scholar-search {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    color: #2c3e50;
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#kpi-scholar-search:focus {
+    outline: none;
+    border-color: #1D9E75;
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
+}
+
+#kpi-scholar-search::placeholder { color: #adb5bd; }
+
+#kpi-scholar-controls select {
+    padding: 9px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    color: #2c3e50;
+    cursor: pointer;
+    flex: 1;
+    min-width: 140px;
+}
+
+#kpi-scholar-controls select:focus {
+    outline: none;
+    border-color: #1D9E75;
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
+}
+
+/* ── Список ── */
+#kpi-scholar-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kpi-scholar-item {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-left: 4px solid #1D9E75;
+    border-radius: 10px;
+    padding: 16px 20px;
+    transition: box-shadow 0.2s;
+}
+
+.kpi-scholar-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+/* ── Бейджі ── */
+.kpi-scholar-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.kpi-scholar-type {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.kpi-scholar-type--article      { background: #E1F5EE; color: #0F6E56; }
+.kpi-scholar-type--chapter      { background: #EEF2FF; color: #3730A3; }
+.kpi-scholar-type--proceedings  { background: #FFF7ED; color: #9A3412; }
+.kpi-scholar-type--book         { background: #FDF4FF; color: #7E22CE; }
+.kpi-scholar-type--preprint     { background: #FFF1F2; color: #9F1239; }
+.kpi-scholar-type--review       { background: #F0FDF4; color: #166534; }
+.kpi-scholar-type--dataset      { background: #F0F9FF; color: #0C4A6E; }
+.kpi-scholar-type--other        { background: #F1F3F5; color: #555;    }
+
+.kpi-scholar-year {
+    display: inline-block;
+    background: #f1f3f5;
+    color: #555;
+    font-size: 12px;
+    padding: 2px 9px;
+    border-radius: 20px;
+}
+
+.kpi-scholar-oa {
+    display: inline-block;
+    background: #FFFBEB;
+    color: #B45309;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid #FCD34D;
+}
+
+.kpi-scholar-cited {
+    display: inline-block;
+    background: #F0F9FF;
+    color: #0369A1;
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 20px;
+}
+
+/* ── Назва / автори ── */
+.kpi-scholar-title {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.kpi-scholar-title {
+    margin: 0 0 6px 0;
+    font-size: 15px !important;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.kpi-scholar-title a {
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.kpi-scholar-authors {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* ── Посилання ── */
+.kpi-scholar-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.kpi-scholar-links a {
+    font-size: 12px;
+    color: #1D9E75;
+    text-decoration: none;
+}
+
+.kpi-scholar-links a:hover { text-decoration: underline; }
+
+.kpi-scholar-empty {
+    color: #999;
+    font-size: 14px;
+    padding: 20px 0;
+}
+
+@media (max-width: 600px) {
+    #kpi-scholar-controls { flex-direction: column; }
+    .kpi-scholar-item { padding: 14px 16px; }
+}
